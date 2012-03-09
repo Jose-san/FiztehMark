@@ -81,7 +81,8 @@ typedef unsigned int            UINT32;
  * @param[out]	score               test score
  * @return 		NO_ERROR or relevant error code
  */
-UINT32 memCpyTest(UINT8 *srcBuf, UINT8 *dstBuf, UINT32 bufLen, UINT32 memBlockSize, UINT32 iters, double *score);
+UINT32 memCpyTest(UINT8 *srcBuf, UINT8 *dstBuf, UINT32 bufLen,
+                  UINT32 memBlockSize, UINT32 iters, double *score);
 
 /**
  *@brief		Getting overall memTest score

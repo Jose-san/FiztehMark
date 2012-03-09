@@ -57,7 +57,7 @@ UINT32 memCpyTest(UINT8 *srcBuf, UINT8 *dstBuf, UINT32 bufLen, UINT32 memBlockSi
 		for(UINT32 j = 0; j < bufLen; j += memBlockSize)
 		{				
 			memcpy(dstBuf + j, srcBuf + j, memBlockSize);
-		}
+        }
 	}
 	time2 = clock() - time1;   
 	

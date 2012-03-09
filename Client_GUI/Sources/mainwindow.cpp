@@ -98,6 +98,7 @@ void MainWindow::on_runBenchmark_clicked()
 {
     pProgressDialog = new QProgressDialog("Running tests...", "Stop", PROGRESSBAR_MIN, PROGRESSBAR_MAX, this);
     pProgressDialog->setWindowModality(Qt::WindowModal);
+    pProgressDialog->show();
     pProgressDialog->setValue(PROGRESSBAR_MIN);
     TestContext testCtx(getMemCpyTestScore,setTestProgress);
     testCtx.runTest();
