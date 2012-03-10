@@ -73,7 +73,7 @@ UINT32 memCpyTest(UINT8 *srcBuf, UINT8 *dstBuf, UINT32 bufLen, UINT32 memBlockSi
 	//amount of bytes that were copied per one microsecond
 	*score = ((double)bufLen * (double)iters) / time1;
 	
-	return NO_ERROR;
+    return NO_ERROR;
 }
 
 /**

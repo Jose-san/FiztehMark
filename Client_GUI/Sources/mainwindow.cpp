@@ -55,6 +55,7 @@ void MainWindow::on_actionAbout_triggered()
 {
     QMessageBox msgBox;
     msgBox.setWindowTitle("About");
+    msgBox.setIcon(QMessageBox::Information);
     QString s;
     s = "This is a cross-platform benchmark";
     s += "\ncreated by NTUU 'KPI' PTI students:";
@@ -108,6 +109,18 @@ void MainWindow::on_runBenchmark_clicked()
     while(testHandler.runTest())
     {
         pProgressDialog->setValue(PROGRESSBAR_MAX);
+        if(testHandler.getErrorCode())
+        {
+            QMessageBox errorMessage;
+            errorMessage.setWindowTitle("Error");
+            errorMessage.setIcon(QMessageBox::Critical);
+            QString mes;
+            mes = "Test '" + testHandler.getTestName() + "' ";
+            mes += "crashed with error code (";
+            mes += QString::number(testHandler.getErrorCode()) + ")";
+            errorMessage.setText(mes);
+            errorMessage.exec();
+        }
         ui->lcdNumber->display((int)testHandler.getTestScore());
         ui->testScores->item(iter,0)->setText(testHandler.getTestName());
         ui->testScores->item(iter,1)->setText(QString::number(testHandler.getTestScore()));

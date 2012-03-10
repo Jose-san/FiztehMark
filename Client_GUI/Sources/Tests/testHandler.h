@@ -33,22 +33,67 @@ class TestHandler
 {
 public:
 
+    /**
+     * @brief           Class constructor
+     * @param[in]       pSetPercent     pointer to the function that changes test progress percent
+     * @return          new class object
+     */
     TestHandler(void (*pSetPercent)(int));
+
+    /**
+     * @brief           Getting current test score
+     * @precondition    current test exists and was executed
+     * @return          current test score
+     */
     unsigned int getTestScore();
+
+    /**
+     * @brief           Getting error code
+     * @precondition    test was executed
+     * @return          current test error code
+     */
     unsigned int getErrorCode(){return errorCode;}
+
+    /**
+     * @brief           Getting current test name
+     * @precondition    current test exists (was added previously)
+     * @return          current test name
+     */
     QString getTestName();
+
+    /**
+     * @brief           Adding new test
+     * @param[in]       s           test name
+     * @param[in]       pGetScore   pointer to test function
+     */
     void addTest(QString s, unsigned int (*pGetScore)(unsigned int*, void(*pFunc)(int)));
+
+    /**
+     * @brief           Executing current test
+     * @precondition    current test exists (was added previously)
+     * @return          TRUE if current test exists; else FALSE
+     */
     bool runTest();
+
+    /**
+     * @brief           Switching to next test
+     * @precondition    next test exists (was added previously)
+     * @return          TRUE if next test exists; else FALSE
+     */
     bool nextTest();
 
 private:
 
-    map<QString, unsigned (*)(unsigned int*,void(*)(int))> testMap;
-    map<QString, unsigned (*)(unsigned int*,void(*)(int))>::iterator testIter;
-    map<QString, unsigned int> scoreMap;
-    map<QString, unsigned int>::iterator scoreIter;
-    void (*pSetPercentDone)(int);
-    unsigned int errorCode;
+    map<QString, unsigned (*)(unsigned int*,void(*)(int))> testMap; /**< map storing test names and pointers
+                                                                         to corresponding test functions */
+    map<QString, unsigned (*)(unsigned int*,void(*)(int))>::iterator testIter; /**< iterator for testMap */
+
+    map<QString, unsigned int> scoreMap; /**< map storing test names and corresponding test results */
+    map<QString, unsigned int>::iterator scoreIter; /**< iterator for scoreMap */
+
+    void (*pSetPercentDone)(int); /**< pointer to the function that changes test progress percent */
+
+    unsigned int errorCode; /**< current test error code */
 };
 
 #endif // TESTHANDLER_H
