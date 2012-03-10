@@ -48,7 +48,7 @@ UINT32 memCpyTest(UINT8 *srcBuf, UINT8 *dstBuf, UINT32 bufLen, UINT32 memBlockSi
 		return ERROR_PARAM_INVALID;
 	}
 	
-	double time1, time2;
+    long double time1, time2;
     UINT32 i;
         
 	time1 = clock();
@@ -62,7 +62,7 @@ UINT32 memCpyTest(UINT8 *srcBuf, UINT8 *dstBuf, UINT32 bufLen, UINT32 memBlockSi
 	time2 = clock() - time1;   
 	
 	//time in microseconds
-	time1 = (time2 / CLOCKS_PER_SEC) * 1000000.0;
+    time1 = (time2 * 1000000.0) / CLOCKS_PER_SEC;
 	if(!time1)
 	{
 		cerr << endl << "WARNING: " << "memTest: too fast procedure, try greater parameter values";
@@ -71,7 +71,7 @@ UINT32 memCpyTest(UINT8 *srcBuf, UINT8 *dstBuf, UINT32 bufLen, UINT32 memBlockSi
 	}
 	
 	//amount of bytes that were copied per one microsecond
-	*score = ((double)bufLen * (double)iters) / time1;
+    *score = ((double)bufLen * (double)iters) / (double)time1;
 	
     return NO_ERROR;
 }
