@@ -264,13 +264,13 @@
        <enum>Qt::SolidLine</enum>
       </property>
       <attribute name="horizontalHeaderDefaultSectionSize">
-       <number>120</number>
+       <number>140</number>
       </attribute>
       <attribute name="horizontalHeaderHighlightSections">
        <bool>true</bool>
       </attribute>
       <attribute name="horizontalHeaderMinimumSectionSize">
-       <number>80</number>
+       <number>50</number>
       </attribute>
       <attribute name="horizontalHeaderShowSortIndicator" stdset="0">
        <bool>false</bool>
@@ -304,7 +304,7 @@
       </column>
       <item row="0" column="0">
        <property name="text">
-        <string>MemCpyTest</string>
+        <string/>
        </property>
        <property name="flags">
         <set>ItemIsDragEnabled|ItemIsEnabled</set>
@@ -313,6 +313,9 @@
       <item row="0" column="1">
        <property name="text">
         <string/>
+       </property>
+       <property name="textAlignment">
+        <set>AlignHCenter|AlignVCenter|AlignCenter</set>
        </property>
        <property name="flags">
         <set>ItemIsDragEnabled|ItemIsEnabled</set>

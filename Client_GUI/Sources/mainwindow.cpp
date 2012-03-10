@@ -6,7 +6,7 @@
 #include <QMessageBox>
 #include <QProgressDialog>
 #include <string.h>
-#include "Tests/testContext.h"
+#include "Tests/testHandler.h"
 
 ////////////////////////////////////////////////////////////////////////
 /// Defines
@@ -40,11 +40,15 @@ MainWindow::MainWindow(QWidget *parent) :
     ui(new Ui::MainWindow)
 {
     ui->setupUi(this);
+    pProgressDialog = new QProgressDialog("Running tests...", "Stop", PROGRESSBAR_MIN, PROGRESSBAR_MAX, this);
+    pProgressDialog->setWindowModality(Qt::WindowModal);
+    pProgressDialog->setAutoClose(false);
 }
 
 MainWindow::~MainWindow()
 {
     delete ui;
+    delete pProgressDialog;
 }
 
 void MainWindow::on_actionAbout_triggered()
@@ -96,17 +100,29 @@ void MainWindow::on_nextButton_clicked()
 
 void MainWindow::on_runBenchmark_clicked()
 {
-    pProgressDialog = new QProgressDialog("Running tests...", "Stop", PROGRESSBAR_MIN, PROGRESSBAR_MAX, this);
-    pProgressDialog->setWindowModality(Qt::WindowModal);
     pProgressDialog->show();
+    TestHandler testHandler(setTestProgress);
+    testHandler.addTest("Memory copying test",getMemCpyTestScore);
+    int iter = 0;
     pProgressDialog->setValue(PROGRESSBAR_MIN);
-    TestContext testCtx(getMemCpyTestScore,setTestProgress);
-    testCtx.runTest();
-    pProgressDialog->setValue(PROGRESSBAR_MAX);
-    ui->lcdNumber->display((int)testCtx.getTestScore());
-    ui->testScores->item(0,1)->setText(QString::number(testCtx.getTestScore()));
+    while(testHandler.runTest())
+    {
+        pProgressDialog->setValue(PROGRESSBAR_MAX);
+        ui->lcdNumber->display((int)testHandler.getTestScore());
+        ui->testScores->item(iter,0)->setText(testHandler.getTestName());
+        ui->testScores->item(iter,1)->setText(QString::number(testHandler.getTestScore()));
+        if(pProgressDialog->wasCanceled())
+        {
+            break;
+        }
+        if(testHandler.nextTest())
+        {
+            ui->testScores->setRowCount(ui->testScores->rowCount()+1);
+        }
+        pProgressDialog->setValue(PROGRESSBAR_MIN);
+    }
+    pProgressDialog->close();
     ui->tabWidget->setCurrentIndex(2);
-    delete pProgressDialog;
 }
 
 void MainWindow::on_tabWidget_currentChanged(int index)

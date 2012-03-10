@@ -12,10 +12,11 @@ TEMPLATE = app
 
 SOURCES += main.cpp\
         mainwindow.cpp \
-    Tests/MemCpyTest/memCpyTest.cpp
+    Tests/MemCpyTest/memCpyTest.cpp \
+    Tests/testHandler.cpp
 
 HEADERS  += mainwindow.h \
     Tests/MemCpyTest/memCpyTest.h \
-    Tests/testContext.h
+    Tests/testHandler.h
 
 FORMS    += mainwindow.ui
